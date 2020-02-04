@@ -1,4 +1,4 @@
-# CS Build Week 1
+# CS Build Week 1.
 
 For your first CS Build Week, you will be building an interactive ***Multi-User Dungeon (MUD)*** client and server in groups. To succeed with this project, you will be applying knowledge you've learned throughout the first part of CS to this project.
 
