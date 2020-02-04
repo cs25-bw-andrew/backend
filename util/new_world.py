@@ -1,9 +1,5 @@
-# Sample Python code that can be used to generate rooms in
-# a zig-zag pattern.
-#
-# You can modify generate_rooms() to create your own
-# procedural generation algorithm and use print_rooms()
-# to see the world.
+from random import randint
+from titles_and_descriptions import names, descs
 
 
 class Room:
@@ -66,6 +62,7 @@ class World:
         direction = 1  # 1: east, -1: west
 
         # While there are rooms to be created...
+        rooms = []
         previous_room = None
         while room_count < num_rooms:
 
@@ -82,10 +79,32 @@ class World:
                 y += 1
                 direction *= -1
 
+            # Create lists of words to be used to create room titles
+            titles = names
+
+            # Create lists of phrases to be used to create room descriptions
+            descriptions = descs
+
+            # Create room title and description
+            title = ""
+            desc = ""
+            for i in range(3):
+                num = randint(0, len(titles[i])-1)
+                num2 = randint(0, len(descriptions[i])-1)
+                if len(title) == 0:
+                    title += titles[i][num] + " "
+                    desc += descriptions[i][num2] + " "
+                elif i == 1:
+                    title += titles[i][num] + " of "
+                    desc += descriptions[i][num2] + " "
+                else:
+                    title += titles[i][num]
+                    desc += descriptions[i][num2]
+
             # Create a room in the given direction
-            room = Room(room_count, "A Generic Room",
-                        "This is a generic room.", x, y)
-            # Note that in Django, you'll need to save the room after you create it
+            room = Room(room_count, title, desc, x, y)
+            # Note that in Django, you'll need to save the room after
+            # you create it
 
             # Save the room in the World grid
             self.grid[y][x] = room
@@ -97,6 +116,12 @@ class World:
             # Update iteration variables
             previous_room = room
             room_count += 1
+
+            # Append room to rooms
+            rooms.append({'id': room.id, 'name': room.name, 'description': room.description,
+                          'n_to': room.n_to, 's_to': room.s_to, 'e_to': room.e_to,
+                          'w_to': room.w_to, 'x': room.x, 'y': room.y})
+        return rooms
 
     def print_rooms(self):
         '''
@@ -155,11 +180,8 @@ class World:
 
 w = World()
 num_rooms = 100
-width = 10
-height = 10
-w.generate_rooms(width, height, num_rooms)
+width = 5
+height = 20
+room_list = w.generate_rooms(width, height, num_rooms)
 w.print_rooms()
-
-
-print(
-    f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")
+# print(room_list)
