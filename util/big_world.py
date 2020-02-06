@@ -93,7 +93,6 @@ def create_rooms():
                     title += names[z][num]
                     desc += descs[z][num2]
             new_room = Room(title=title, description=desc, x=j, y=i)
-            print(new_room.x, new_room.y)
             new_room.save()
 
 create_rooms()
@@ -102,37 +101,77 @@ rooms_list = Room.objects.all()
 print(rooms_list)
 print(rooms_list[0].x)
 
+# def generate_connection():
+
+#     for i in range(100):
+#         for j in range(100):
+#             if rooms_list[i].x == rooms_list[j].x :
+#                 if rooms_list[i].y - rooms_list[j].y == 1:
+#                     print("x,y",rooms_list[i].x,rooms_list[i].y )
+#                     print("s",rooms_list[i].x,rooms_list[j].x, (rooms_list[i].y - rooms_list[j].y))
+#                     rooms_list[i].connectRooms(rooms_list[j], "s")
+#                     rooms_list[j].connectRooms(rooms_list[i], "n")
+                    
+#                 elif rooms_list[j].y - rooms_list[i].y == 1:
+#                     print("x,y",rooms_list[i].x,rooms_list[i].y )
+#                     print("n",rooms_list[i].x,rooms_list[j].x, (rooms_list[i].y - rooms_list[j].y))
+#                     rooms_list[i].connectRooms(rooms_list[j], "n")
+#                     rooms_list[j].connectRooms(rooms_list[i], "s")
+                    
+#             elif rooms_list[i].y == rooms_list[j].y :
+#                 if rooms_list[i].x - rooms_list[j].x == 1:
+#                     print("x,y",rooms_list[i].x,rooms_list[i].y )
+#                     print("w",rooms_list[i].y,rooms_list[j].y, (rooms_list[i].x - rooms_list[j].x))
+#                     rooms_list[i].connectRooms(rooms_list[j], "w")
+#                     rooms_list[j].connectRooms(rooms_list[i], "e")
+                    
+#                 elif rooms_list[j].x - rooms_list[i].x == 1:
+#                     print("x,y",rooms_list[i].x,rooms_list[i].y )
+#                     print("e",rooms_list[i].y,rooms_list[j].y, (rooms_list[i].x - rooms_list[j].x))
+#                     rooms_list[i].connectRooms(rooms_list[j], "e")
+#                     rooms_list[j].connectRooms(rooms_list[i], "w")
+
+
 def generate_connection():
-    u=0
     for i in range(100):
-        for j in range(100):
-            if rooms_list[i].x == rooms_list[j].x :
-                if rooms_list[i].y - rooms_list[j].y == 1:
-                    print("x,y",rooms_list[i].x,rooms_list[i].y )
-                    print("s",rooms_list[i].x,rooms_list[j].x, (rooms_list[i].y - rooms_list[j].y))
-                    rooms_list[i].connectRooms(rooms_list[j], "s")
-                    rooms_list[j].connectRooms(rooms_list[i], "n")
-                    
-                elif rooms_list[j].y - rooms_list[i].y == 1:
-                    print("x,y",rooms_list[i].x,rooms_list[i].y )
-                    print("n",rooms_list[i].x,rooms_list[j].x, (rooms_list[i].y - rooms_list[j].y))
-                    rooms_list[i].connectRooms(rooms_list[j], "n")
-                    rooms_list[j].connectRooms(rooms_list[i], "s")
-                    
-            elif rooms_list[i].y == rooms_list[j].y :
-                if rooms_list[i].x - rooms_list[j].x == 1:
-                    print("x,y",rooms_list[i].x,rooms_list[i].y )
-                    print("w",rooms_list[i].y,rooms_list[j].y, (rooms_list[i].x - rooms_list[j].x))
-                    rooms_list[i].connectRooms(rooms_list[j], "w")
-                    rooms_list[j].connectRooms(rooms_list[i], "e")
-                    
-                elif rooms_list[j].x - rooms_list[i].x == 1:
-                    print("x,y",rooms_list[i].x,rooms_list[i].y )
-                    print("e",rooms_list[i].y,rooms_list[j].y, (rooms_list[i].x - rooms_list[j].x))
-                    rooms_list[i].connectRooms(rooms_list[j], "e")
-                    rooms_list[j].connectRooms(rooms_list[i], "w")
-        u += 1           
-    print("u", u)
+        print(rooms_list[i].x,rooms_list[i].y)
+        if rooms_list[i].x == 0 :
+            if rooms_list[i].y == 0:
+                rooms_list[i].connectRooms(rooms_list[i + 10], "n")
+                rooms_list[i].connectRooms(rooms_list[i + 1], "e")
+            elif rooms_list[i].y == 9:
+                rooms_list[i].connectRooms(rooms_list[i - 10], "s")
+                rooms_list[i].connectRooms(rooms_list[i + 1], "e")
+            else:
+                rooms_list[i].connectRooms(rooms_list[i + 10], "n")
+                rooms_list[i].connectRooms(rooms_list[i + 1], "e")
+                rooms_list[i].connectRooms(rooms_list[i - 10], "s")
+        elif rooms_list[i].x == 9:
+            if rooms_list[i].y == 0:
+                rooms_list[i].connectRooms(rooms_list[i + 10], "n")
+                rooms_list[i].connectRooms(rooms_list[i - 1], "w")
+            elif rooms_list[i].y == 9:
+                rooms_list[i].connectRooms(rooms_list[i - 10], "s")
+                rooms_list[i].connectRooms(rooms_list[i - 1], "w")
+            else:
+                rooms_list[i].connectRooms(rooms_list[i + 10], "n")
+                rooms_list[i].connectRooms(rooms_list[i - 1], "w")
+                rooms_list[i].connectRooms(rooms_list[i - 10], "s")
+        elif rooms_list[i].y == 0:
+            rooms_list[i].connectRooms(rooms_list[i + 10], "n")
+            rooms_list[i].connectRooms(rooms_list[i + 1], "e")
+            rooms_list[i].connectRooms(rooms_list[i - 1], "w")
+        elif rooms_list[i].y == 9:
+            rooms_list[i].connectRooms(rooms_list[i - 10], "s")
+            rooms_list[i].connectRooms(rooms_list[i + 1], "e")
+            rooms_list[i].connectRooms(rooms_list[i - 1], "w")
+        else:
+            rooms_list[i].connectRooms(rooms_list[i+10], "n")
+            rooms_list[i].connectRooms(rooms_list[i-10], "s")
+            rooms_list[i].connectRooms(rooms_list[i + 1], "e")
+            rooms_list[i].connectRooms(rooms_list[i-1], "w")
+            
+
 
 
 
