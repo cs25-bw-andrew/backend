@@ -97,5 +97,4 @@ def say(request):
     for p_uuid in currentPlayerUUIDs:
         pusher.trigger(f'p-channel-{p_uuid}', u'broadcast', {
             'message': f'{player.user.username} says:  {message}.'})
-    return JsonResponse({'error': "Not yet implemented"}, safe = True,
-                        status = 500)
+    return JsonResponse({'message':f'{player.user.username} says:  {message}.'}, safe = True)
