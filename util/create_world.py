@@ -29,16 +29,12 @@ r_treasure.save()
 
 # Link rooms together
 r_outside.connectRooms(r_foyer, "n")
-r_foyer.connectRooms(r_outside, "s")
 
 r_foyer.connectRooms(r_overlook, "n")
-r_overlook.connectRooms(r_foyer, "s")
 
 r_foyer.connectRooms(r_narrow, "e")
-r_narrow.connectRooms(r_foyer, "w")
 
 r_narrow.connectRooms(r_treasure, "n")
-r_treasure.connectRooms(r_narrow, "s")
 
 players=Player.objects.all()
 for p in players:
