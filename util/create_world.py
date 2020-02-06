@@ -31,7 +31,5 @@ def generate_connection():
                 if rooms_list[i].y == rooms_list[j].y and rooms_list[j].x - rooms_list[i].x == 1:
                     rooms_list[i].connectRooms(rooms_list[j],"e")
 
-r_narrow.connectRooms(r_treasure, "n")
-r_treasure.connectRooms(r_narrow, "s")
 
 generate_connection()
